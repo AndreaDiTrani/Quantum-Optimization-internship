@@ -8,6 +8,23 @@ import networkx as nx
 import gurobipy as gb
 from gurobipy import GRB
 
+def build_template(g_size):
+    template = nx.Graph()
+
+    for i in range(g_size):
+        template.add_node((0,i), pos=(0,i))
+        template.add_node((1,i), pos=(1,i))
+
+    for i in range(g_size):
+        for j in range(g_size):
+            template.add_edge((0,i),(1,j))
+
+    pos_dict = {}
+    for n in template.nodes:
+        pos_dict[n] = template.nodes[n]['pos']
+    
+    return template, pos_dict
+
 def define_decision_variables(target, graph, model):
 
     var_dict = {}
